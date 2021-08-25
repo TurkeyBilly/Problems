@@ -72,7 +72,10 @@ def backpack_objs(
 
 def get_backpack_max_comb(max_weight, weight, value, display = True, GiveVal = True):
     example = backpack_objs(max_weight, weight, value)
-    if display: print('Maximum benifit: {}, Combination: {}'.format(example[0][0], sorted(example[0][1]))) 
-    if GiveVal: return(example[0][0], sorted(example[0][1]))
+    max_val = example[0][0] if type(example[0]) is not int else example[0]
+    objs = example[0][1] if type(example[0]) is not int else example[1]
+    if display: print('Maximum benifit: {}, Combination: {}'.format(max_val, sorted(objs))) 
+    if GiveVal: return(max_val, sorted(objs))
+
 
 get_backpack_max_comb(Max_Weight, Weight, Value)
