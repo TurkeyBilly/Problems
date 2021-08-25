@@ -70,9 +70,9 @@ def backpack_objs(
         return backpack_objs(max_weight, weight, value, index-1, objs, know_value), # 不拿
 
 
-def get_backpack_max_comb(max_weight, weight, value, display = True):
+def get_backpack_max_comb(max_weight, weight, value, display = True, GiveVal = True):
     example = backpack_objs(max_weight, weight, value)
-    print('Maximum benifit: {}, Combination: {}'.format(example[0][0], sorted(example[0][1]))) if display
-    return(example[0][0], sorted(example[0][1]))
+    if display: print('Maximum benifit: {}, Combination: {}'.format(example[0][0], sorted(example[0][1]))) 
+    if GiveVal: return(example[0][0], sorted(example[0][1]))
 
 get_backpack_max_comb(Max_Weight, Weight, Value)
