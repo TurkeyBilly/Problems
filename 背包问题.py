@@ -1,5 +1,5 @@
-
-'''参考思路：https://www.bilibili.com/video/BV1g7411B7SP/?spm_id_from=333.788.recommend_more_video.0
+#题目
+'''
 有N件物品和一个容量为V的背包。
 第i件物品的重量是w[i]，价值是v[i]。
 求解将哪些物品装入背包可使这些物品的重量总和不超过背包容量，且价值总和最大。
@@ -7,21 +7,23 @@
 '''
 
 '''
-Example: given Weight and Value list that describes weight and value for each item
-how to find the way to maximize values while wight does not exceed 8?
-ExampleReturn: (9, [2,1])
+Example: given Weight and Value list which describe weight and value for each item
+    Weight = [2, 3, 4, 5]
+    Value = [3, 4, 5, 8]
+find the way to maximize values while total weight does not exceed the maximum (given)
+    Max_Weight = 8
+
+Input:                                                 Output:
+    backpack_max_comb(Max_Weight, Weight, Value)   ->         (12, [1,3])
 '''
 Weight = [2, 3, 4, 5]
 Value = [3, 4, 5, 8]
 Max_Weight = 8
 
-
-#print(max((1,3),('hi',5),('lol',5),key=lambda x: x[1]))
-#print(max((1,3),(1,5),(2,2),key=lambda x: x[0]))
 try:
     from typing import List, Tuple
 except ImportError:
-    print("Does not have module named typing")
+    print("Does not have module named typing, please delete annotations")
 
 def backpack_objs(
     # Input Parameters
@@ -29,10 +31,10 @@ def backpack_objs(
     weight : List[int], 
     value : List[int], 
     # None-input inherit parameters
-    index : int = -1, 
+    index : int = -2, 
     objs : List[int] = [],
     know_value : int = 0
-    ) -> Tuple(int, List[int]):
+    ): #-> Tuple(int, List[int]):
     '''
     This function accepts three inputs parameters and returns a tuple containing the maximum value and the combination of objs
     However, it only returns one type of the best ways if there exist multiple to get a maximum
@@ -43,11 +45,11 @@ def backpack_objs(
     '''
     # Define the recursion base case: 
     # when there's no more space for the backpack to hold or no more things to hold return 0
-    if index == 0 or max_weight == 0:
-        return know_value, objs
+    if index == -1 or max_weight == 0:
+        return [know_value, objs]
     
     # Define initialize: initialize the index if not given
-    if index == -1:
+    if index == -2:
         index = len(Weight) - 1
     # If there is stil space to hold the item at index
     if max_weight - weight[index] >= 0 :
@@ -65,7 +67,12 @@ def backpack_objs(
             )
     # If there is no enough space to hold the item at index
     else:
-        return backpack_objs(max_weight, weight, value, index-1, objs), # 不拿
+        return backpack_objs(max_weight, weight, value, index-1, objs, know_value), # 不拿
 
-print(backpack_objs(Max_Weight, Weight, Value))
 
+def get_backpack_max_comb(max_weight, weight, value, display = True):
+    example = backpack_objs(max_weight, weight, value)
+    print('Maximum benifit: {}, Combination: {}'.format(example[0][0], sorted(example[0][1]))) if display
+    return(example[0][0], sorted(example[0][1]))
+
+get_backpack_max_comb(Max_Weight, Weight, Value)
